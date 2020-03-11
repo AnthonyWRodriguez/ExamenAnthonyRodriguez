@@ -30,9 +30,21 @@ function employeeModel(db){
   }
 
   lib.getEmployeesByCompany = (company, handler) => {
+    var query = {"company": company};
+    var projection = {"name":1, "email":1, "company":1, "_id":0};
+    empColl.findOne(
+      query,
+      {"projection":projection},
+      (err, doc)=>{
+        if(err){
+          return handler(err, null);
+        }
+        return handler(null, doc);
+      }
+    );
     // implementar
     // solo mostrar name, email, company
-    return handler(new Error("No Implementado"), null);
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.getEmployeesByTag = (tag, handler) => {
