@@ -4,16 +4,18 @@ function employeeModel(db){
   var lib = {};
   var empColl = db.collection('employees');
   lib.getEmployees = (handler)=>{
+    empColl.find({}).toArray(handler);
     // implementar
     // obtener todos los documentos
-    return handler(new Error("No Implementado"), null);
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.getEmployeesById = (id, handler) => {
+    //var query = {"_id":}
     // implementar
     // Obtener un Documento solo mostrar
     // email, phone, name y age
-    return handler(new Error("No Implementado"), null);
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.getEmployeesByCompany = (company, handler) => {
