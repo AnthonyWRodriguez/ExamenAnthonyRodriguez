@@ -11,7 +11,18 @@ function employeeModel(db){
   }
 
   lib.getEmployeesById = (id, handler) => {
-    //var query = {"_id":}
+    var query = {"_id": new ObjectID(id)};
+    var projection = {"email":1, "phone":1, "name":1, "age":1, "_id":0};
+    empColl.findOne(
+      query,
+      {"projection":projection},
+      (err, doc)=>{
+        if(err){
+          return handler(err, null);
+        }
+        return handler(null, doc);
+      }
+    );
     // implementar
     // Obtener un Documento solo mostrar
     // email, phone, name y age
