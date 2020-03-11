@@ -44,6 +44,17 @@ function initEmployee(db) {
     });
   });
 
+  router.get('/bytag/:tag',(req, res)=>{
+    var tags = req.params.tag;
+    empModel.getEmployeesByTag(tags, (err, doc)=>{
+      if(err){
+        console.log(err);
+        return res.status(500).json({"error":"error"});
+      }
+      return res.status(200).json(doc);
+    });
+  });
+
   
   return router;
 }
