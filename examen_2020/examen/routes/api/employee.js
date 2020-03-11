@@ -55,6 +55,40 @@ function initEmployee(db) {
     });
   });
 
+  router.post('/addtag/:id', (req, res)=>{
+    var id = req.params.id;
+    var tag = req.body.tag;
+    empModel.addEmployeeATag(tag, id, (err, doc)=>{
+      if(err){
+        console.log(err);
+        return res.status(500).json({"error":"error"});
+      }
+      return res.status(200).json(doc);
+    });
+  });
+
+  router.delete('/delete/:id', (req, res)=>{
+    var id = req.params.id;
+    empModel.removeEmployee(id, (err, doc)=>{
+      if(err){
+        console.log(err);
+        return res.status(500).json({"error":"error"});
+      }
+      return res.status(200).json(doc);
+    });
+  });
+
+  router.post('/makeolder',(req, res)=>{
+    var age = parseInt(req.body.age);
+    empModel.increaseAgeToAll(age, (err, doc)=>{
+      if(err){
+        console.log(err);
+        return res.status(500).json({"error":"error"});
+      }
+      return res.status(200).json(doc);
+    });
+  });
+
   
   return router;
 }

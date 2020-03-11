@@ -67,23 +67,66 @@ function employeeModel(db){
   }
 
   lib.addEmployeeATag = ( tag, id, handler) => {
+    var _tag = tag;
+    var query = {"_id": new ObjectID(id)};
+    var updateCommand = {
+      $push:{
+        "tags": _tag
+      }
+    };
+    empColl.findOneAndUpdate(
+      query,
+      updateCommand,
+      {returnNewDocument: true},
+      (err, doc)=>{
+        if(err){
+          return handler(err, null);
+        }
+        console.log(doc);
+        return handler(null, doc.value);
+      });
     //Implementar
     //Se requiere agregar a un documento un nuevo tag
     // $push
-    return handler(new Error("No Implementado"), null);
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.removeEmployee = (id, handler) => {
+    var query = {"_id": new ObjectID(id)};
+    empColl.deleteOne(
+      query,
+      (err, doc)=>{
+        if(err){
+          return handler(err, null);
+        }
+        return handler(null, doc);
+      }
+    );
     //Implementar
     //Se requiere eliminar un documento de la colección
-    return handler(new Error("No Implementado"), null);
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.increaseAgeToAll = (ageDelta, handler) => {
+    var updateCommand = {
+      "$inc": {
+        "age": ageDelta
+      }
+    };
+    empColl.updateMany(
+      {},
+      updateCommand,
+      (err, doc)=>{
+        if(err){
+          return handler(err, null);
+        }
+        return handler(null, doc);
+      }
+    )
     //Implementar
     //Se requiere modificar todos los documentos de la colección
     // incrementando age por la cantidad de ageDelta $inc
-    return handler(new Error("No Implementado"), null);
+    //return handler(new Error("No Implementado"), null);
   }
   return lib;
 }
